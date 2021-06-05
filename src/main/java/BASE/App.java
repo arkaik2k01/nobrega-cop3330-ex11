@@ -14,7 +14,7 @@ Print out the new amount in U.S. dollars.
 
 The formula for currency conversion is derived from
 
-c_to / c_frame = rate
+c_to / c_from = rate
 where
 c_to is the amount in U.S. dollars.
 c_from is the amount in euros.
@@ -35,11 +35,46 @@ Build a dictionary of conversion rates and prompt for the countries instead of t
 Wire up your application to an external API that provides the current exchange rates.
  */
 
+import java.util.Scanner;
+
 public class App
 {
+    static Scanner in = new Scanner(System.in);
+
     public static void main(String[] args)
     {
-        
+        App prog = new App();
+
+        //input
+        int euros = prog.getEuros();
+        double exRate = prog.getExRate();
+
+        //calculate total
+        double dollars = prog.eurosToDollars(euros, exRate);
+
+        //output
+        prog.printDollars(euros, exRate, dollars);
     }
 
+    private int getEuros()
+    {
+        System.out.print("How many euros are you exchanging? ");
+        return in.nextInt();
+    }
+
+    private double getExRate()
+    {
+        System.out.print("What is the exchange rate? ");
+        return in.nextDouble();
+    }
+
+    private double eurosToDollars(int euro, double exRate)
+    {
+        return (double)euro * exRate;
+    }
+
+    private void printDollars(int euro, double exRate, double dollars)
+    {
+        System.out.printf("%d euros at exchange rate of %f is%n%.2f U.S. dollars", euro, exRate, dollars);
+    }
 }
